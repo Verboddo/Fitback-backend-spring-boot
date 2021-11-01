@@ -18,11 +18,14 @@ import java.util.stream.Stream;
 @Service
 public class FileStorageService {
 
-    @Autowired
     private FileDBRepository fileDBRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    public FileStorageService(FileDBRepository fileDBRepository, UserRepository userRepository) {
+        this.fileDBRepository = fileDBRepository;
+        this.userRepository = userRepository;
+    }
 
     public FileDB uploadFile(MultipartFile multipartFile, Long id) throws IOException {
             String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));

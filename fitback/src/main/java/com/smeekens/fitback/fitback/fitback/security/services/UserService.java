@@ -36,7 +36,7 @@ public class UserService {
         }
     }
 
-    public void updateUser(String username, User newUser) {
+    /*public void updateUser(String username, User newUser) {
         Optional<User> userOptional = userRepository.findByUsername(username);
 
         if (userOptional.isPresent()) {
@@ -52,7 +52,7 @@ public class UserService {
         } else {
             throw new UserNotFoundException(username);
         }
-    }
+    }*/
 
     public void deleteUserById(Long id) {
         if(userRepository.existsById(id)) {

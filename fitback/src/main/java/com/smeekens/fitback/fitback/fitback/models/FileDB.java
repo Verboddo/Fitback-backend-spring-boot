@@ -1,5 +1,7 @@
 package com.smeekens.fitback.fitback.fitback.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 
@@ -21,8 +23,11 @@ public class FileDB {
     public FileDB() {
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.LAZY,
+            optional = false)
+    @JoinColumn(name = "user_id",
+            nullable = false)
+    @JsonIgnore
     private User user;
 
     public FileDB(String name, String type, byte[] data) {
@@ -75,4 +80,6 @@ public class FileDB {
         this.data = data;
     }
 
+    public void add(FileDB fileDB) {
+    }
 }

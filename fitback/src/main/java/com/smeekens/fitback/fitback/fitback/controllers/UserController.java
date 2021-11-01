@@ -44,7 +44,7 @@ public class UserController {
     }
 
     // Update user information, only for logged-in user or admin
-    @PostMapping(value = "/update-information/{username}")
+    /*@PostMapping(value = "/update-information/{username}")
     public ResponseEntity<Object> updateUserInformation(@PathVariable("username") String username, @RequestBody User user, Principal principal) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
@@ -58,7 +58,7 @@ public class UserController {
         } else {
             throw new NotAuthorizedException();
         }
-    }
+    }*/
 
     // Delete user by id, only admin can do this
     @DeleteMapping("/delete/{id}")

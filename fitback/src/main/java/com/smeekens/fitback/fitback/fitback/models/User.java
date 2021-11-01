@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.io.File;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -35,13 +36,13 @@ public class User {
     @Size(max = 120)
     private String password;
 
-    private String fullName;
+    /*private String fullName;
     private String address;
     private String zipcode;
     private String country;
     private Integer age;
     private Integer height;
-    private Integer weight;
+    private Integer weight;*/
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",
@@ -50,16 +51,30 @@ public class User {
     private Set<Role> roles = new HashSet<>();
 
     @OneToMany(
-            fetch = FetchType.EAGER,
+            fetch = FetchType.LAZY,
             mappedBy = "user",
             cascade = CascadeType.ALL)
     @JsonIgnore
     private List<FileDB> fileDB;
 
+
+    @OneToOne(fetch = FetchType.LAZY,
+            mappedBy = "user",
+            cascade = CascadeType.ALL)
+    private UserProfile userProfile;
+
     public User() {
     }
 
-public List<FileDB> getFileDB() {
+    public UserProfile getUserProfile() {
+        return userProfile;
+    }
+
+    public void setUserProfile(UserProfile userProfile) {
+        this.userProfile = userProfile;
+    }
+
+    public List<FileDB> getFileDB() {
         return fileDB;
     }
 
@@ -78,7 +93,7 @@ public List<FileDB> getFileDB() {
         this.password = password;
     }
 
-    public User(String fullName, String address, String zipcode, String country, int age, int height, int weight) {
+    /*public User(String fullName, String address, String zipcode, String country, int age, int height, int weight) {
         this.fullName = fullName;
         this.address = address;
         this.zipcode = zipcode;
@@ -86,7 +101,7 @@ public List<FileDB> getFileDB() {
         this.age = age;
         this.height = height;
         this.weight = weight;
-    }
+    }*/
 
     public Long getId() {
         return id;
@@ -128,7 +143,7 @@ public List<FileDB> getFileDB() {
         this.roles = roles;
     }
 
-    public String getFullName() {
+    /*public String getFullName() {
         return fullName;
     }
 
@@ -182,5 +197,5 @@ public List<FileDB> getFileDB() {
 
     public void setWeight(int weight) {
         this.weight = weight;
-    }
+    }*/
 }
