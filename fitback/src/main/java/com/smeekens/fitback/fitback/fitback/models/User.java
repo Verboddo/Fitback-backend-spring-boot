@@ -49,16 +49,17 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    // one to one van maken
-    @OneToMany(fetch = FetchType.LAZY,
-            mappedBy = "user")
+    @OneToMany(
+            fetch = FetchType.EAGER,
+            mappedBy = "user",
+            cascade = CascadeType.ALL)
     @JsonIgnore
     private List<FileDB> fileDB;
 
     public User() {
     }
 
-    public List<FileDB> getFileDB() {
+public List<FileDB> getFileDB() {
         return fileDB;
     }
 

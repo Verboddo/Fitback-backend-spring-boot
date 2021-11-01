@@ -5,6 +5,7 @@ import com.smeekens.fitback.fitback.fitback.models.User;
 import com.smeekens.fitback.fitback.fitback.security.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -20,12 +21,14 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    // Get all users, only for admin
     @GetMapping(value = "")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Object> getUsers() {
-        return ResponseEntity.ok().body(userService.getUsers());
+        return ResponseEntity.ok().body(userService.getAllUsers());
     }
 
-    // end points nummers
+    // Get user by username, only for logged-in user or admin
     @GetMapping(value = "/{username}")
     public ResponseEntity<Object> getUser(@PathVariable("username") String username, Principal principal) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -40,6 +43,7 @@ public class UserController {
         }
     }
 
+    // Update user information, only for logged-in user or admin
     @PostMapping(value = "/update-information/{username}")
     public ResponseEntity<Object> updateUserInformation(@PathVariable("username") String username, @RequestBody User user, Principal principal) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -56,7 +60,9 @@ public class UserController {
         }
     }
 
+    // Delete user by id, only admin can do this
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Object> deleteUser(@PathVariable("id") Long id) {
         userService.deleteUserById(id);
         return ResponseEntity.ok().build();

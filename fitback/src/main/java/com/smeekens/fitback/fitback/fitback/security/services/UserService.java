@@ -1,7 +1,8 @@
 package com.smeekens.fitback.fitback.fitback.security.services;
 
-import com.smeekens.fitback.fitback.fitback.exceptions.BadRequestException;
+import com.smeekens.fitback.fitback.fitback.exceptions.UserNotFoundException;
 import com.smeekens.fitback.fitback.fitback.models.User;
+import com.smeekens.fitback.fitback.fitback.repository.FileDBRepository;
 import com.smeekens.fitback.fitback.fitback.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,16 +16,24 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    private final FileDBRepository fileDBRepository;
+
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, FileDBRepository fileDBRepository) {
         this.userRepository = userRepository;
+        this.fileDBRepository = fileDBRepository;
     }
 
-    public Collection<User> getUsers() {
+    public Collection<User> getAllUsers() {
         return userRepository.findAll();
     }
+
     public Optional<User> getUser(String username) {
-        return userRepository.findByUsername(username);
+        if(userRepository.existsByUsername(username)) {
+            return userRepository.findByUsername(username);
+        } else {
+            throw new UserNotFoundException(username);
+        }
     }
 
     public void updateUser(String username, User newUser) {
@@ -41,7 +50,7 @@ public class UserService {
             user.setWeight(newUser.getWeight());
             userRepository.save(user);
         } else {
-            throw new BadRequestException("Did not find user");
+            throw new UserNotFoundException(username);
         }
     }
 
@@ -49,7 +58,7 @@ public class UserService {
         if(userRepository.existsById(id)) {
             userRepository.deleteById(id);
         } else {
-            throw new BadRequestException("User not found");
+            throw new UserNotFoundException();
         }
     }
 

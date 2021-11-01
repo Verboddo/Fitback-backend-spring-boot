@@ -9,6 +9,7 @@ import com.smeekens.fitback.fitback.fitback.security.services.FileStorageService
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +36,7 @@ public class FilesController {
         this.userRepository = userRepository;
     }
 
+    // upload a file
     @PostMapping("/upload")
     public ResponseEntity<Object> uploadFile(@RequestParam("file") MultipartFile multipartFile, Authentication authentication) throws IOException {
         User user = userRepository.findByUsername(authentication.getName()).get();
@@ -44,7 +46,9 @@ public class FilesController {
         return ResponseEntity.created(location).build();
     }
 
+    // get all files, only for admin
     @GetMapping("/files")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<ResponseFile>> getAllFiles() {
         List<ResponseFile> files = fileStorageService.getAllFiles().map(fileDB -> {
             String fileDownloadUri = ServletUriComponentsBuilder
@@ -62,7 +66,9 @@ public class FilesController {
         return ResponseEntity.ok().body(files);
     }
 
+    // Get file by id, only for admin
     @GetMapping("/files/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<byte[]> getFileById(@PathVariable("id") Long id) {
         FileDB fileDB = fileStorageService.getFileById(id);
         return ResponseEntity.ok()
@@ -70,16 +76,12 @@ public class FilesController {
                 .body(fileDB.getData());
     }
 
+    // Delete file by id, only for admin
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Object> deleteFileById(@PathVariable("id") Long id){
         fileStorageService.deleteFile(id);
         return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> getFileDBById(@PathVariable("id") Long id) {
-        // moet data hieronder uit krijgen
-       return ResponseEntity.ok().body(fileStorageService.getFileDBById(id));
     }
 
 }
