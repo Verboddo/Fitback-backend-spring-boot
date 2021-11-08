@@ -35,4 +35,10 @@ public class UserProfileController {
                 .buildAndExpand(userProfile1).toUri();
         return ResponseEntity.created(location).build();
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateUserProfile(@PathVariable("id")Long id, @RequestBody UserProfile userProfile) {
+        userProfileService.updateUserProfile(id, userProfile);
+        return ResponseEntity.ok().build();
+    }
 }

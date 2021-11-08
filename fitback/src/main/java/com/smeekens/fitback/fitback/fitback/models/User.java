@@ -44,17 +44,16 @@ public class User {
     private Integer height;
     private Integer weight;*/
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
     @OneToMany(
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             mappedBy = "user",
             cascade = CascadeType.ALL)
-    @JsonIgnore
     private List<FileDB> fileDB;
 
 

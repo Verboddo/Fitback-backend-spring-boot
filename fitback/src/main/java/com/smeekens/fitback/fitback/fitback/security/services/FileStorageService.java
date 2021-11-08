@@ -33,7 +33,7 @@ public class FileStorageService {
 
             FileDB fileDB = new FileDB(fileName, multipartFile.getContentType(), multipartFile.getBytes());
             fileDB.setUser(user);
-            user.addFileDB(fileDB);
+            //user.addFileDB(fileDB);
             userRepository.save(user);
             return fileDBRepository.save(fileDB);
     }

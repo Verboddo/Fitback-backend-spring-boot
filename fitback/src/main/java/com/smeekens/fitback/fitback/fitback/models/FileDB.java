@@ -17,7 +17,8 @@ public class FileDB {
 
     private String type;
 
-    @Lob
+    //@Lob
+    @JsonIgnore
     private byte[] data;
 
     public FileDB() {

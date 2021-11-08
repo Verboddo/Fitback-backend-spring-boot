@@ -28,31 +28,16 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Optional<User> getUser(String username) {
-        if(userRepository.existsByUsername(username)) {
-            return userRepository.findByUsername(username);
+    public User getUser(String username) {
+    Optional<User> optionalUser = userRepository.findByUsername(username);
+       if(optionalUser.isPresent()) {
+           User user = optionalUser.get();
+
+           return user;
         } else {
             throw new UserNotFoundException(username);
         }
     }
-
-    /*public void updateUser(String username, User newUser) {
-        Optional<User> userOptional = userRepository.findByUsername(username);
-
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            user.setFullName(newUser.getFullName());
-            user.setAddress(newUser.getAddress());
-            user.setZipcode(newUser.getZipcode());
-            user.setCountry(newUser.getCountry());
-            user.setAge(newUser.getAge());
-            user.setHeight(newUser.getHeight());
-            user.setWeight(newUser.getWeight());
-            userRepository.save(user);
-        } else {
-            throw new UserNotFoundException(username);
-        }
-    }*/
 
     public void deleteUserById(Long id) {
         if(userRepository.existsById(id)) {

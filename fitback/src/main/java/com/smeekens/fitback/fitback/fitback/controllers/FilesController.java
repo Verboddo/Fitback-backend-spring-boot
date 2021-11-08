@@ -53,7 +53,7 @@ public class FilesController {
         List<ResponseFile> files = fileStorageService.getAllFiles().map(fileDB -> {
             String fileDownloadUri = ServletUriComponentsBuilder
                     .fromCurrentContextPath()
-                    .path("/files")
+                    .path("/api/file/")
                     .path(String.valueOf(fileDB.getId()))
                     .toUriString();
 
@@ -67,7 +67,7 @@ public class FilesController {
     }
 
     // Get file by id, only for admin
-    @GetMapping("/files/{id}")
+    @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<byte[]> getFileById(@PathVariable("id") Long id) {
         FileDB fileDB = fileStorageService.getFileById(id);
