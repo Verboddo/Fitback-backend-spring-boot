@@ -14,15 +14,8 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-    private final UserRepository userRepository;
-
-    private final FileDBRepository fileDBRepository;
-
     @Autowired
-    public UserService(UserRepository userRepository, FileDBRepository fileDBRepository) {
-        this.userRepository = userRepository;
-        this.fileDBRepository = fileDBRepository;
-    }
+    private UserRepository userRepository;
 
     public Collection<User> getAllUsers() {
         return userRepository.findAll();

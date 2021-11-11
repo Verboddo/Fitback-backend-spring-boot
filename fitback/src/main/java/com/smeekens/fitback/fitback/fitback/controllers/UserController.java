@@ -1,7 +1,6 @@
 package com.smeekens.fitback.fitback.fitback.controllers;
 
 import com.smeekens.fitback.fitback.fitback.exceptions.NotAuthorizedException;
-import com.smeekens.fitback.fitback.fitback.models.User;
 import com.smeekens.fitback.fitback.fitback.security.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
