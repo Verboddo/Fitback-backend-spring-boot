@@ -23,9 +23,6 @@ public class FileDB {
     @JsonIgnore
     private byte[] data;
 
-    public FileDB() {
-    }
-
     @ManyToOne(fetch = FetchType.LAZY,
             optional = false)
     @JoinColumn(name = "user_id",
@@ -33,6 +30,8 @@ public class FileDB {
     @JsonIgnore
     private User user;
 
+    public FileDB() {
+    }
 
     public FileDB(String name, String type, byte[] data) {
         this.name = name;

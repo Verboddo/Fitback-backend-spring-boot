@@ -53,21 +53,10 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/{id}/feedback")
-    public ResponseEntity<Object> getUserFeedback(@PathVariable("id") Long id) {
-        Iterable<Feedback> feedbacks = userService.getUserFeedback(id);
-        return ResponseEntity.ok(feedbacks);
-    }
-
     @GetMapping("/{id}/userprofile")
     public ResponseEntity<Object> getUserUserProfile(@PathVariable("id") Long id) {
         UserProfile userProfiles = userService.getUserUserProfile(id);
         return ResponseEntity.ok(userProfiles);
-    }
-
-    public ResponseEntity<Object> getUserFiles(@PathVariable("id") Long id) {
-        FileDB fileDB = userService.getUserFiles(id);
-        return ResponseEntity.ok(fileDB);
     }
 
 }

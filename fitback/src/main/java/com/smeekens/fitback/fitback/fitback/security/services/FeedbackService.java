@@ -1,9 +1,9 @@
 package com.smeekens.fitback.fitback.fitback.security.services;
 
 import com.smeekens.fitback.fitback.fitback.models.Feedback;
-import com.smeekens.fitback.fitback.fitback.models.User;
+import com.smeekens.fitback.fitback.fitback.models.FileDB;
 import com.smeekens.fitback.fitback.fitback.repository.FeedbackRepository;
-import com.smeekens.fitback.fitback.fitback.repository.UserRepository;
+import com.smeekens.fitback.fitback.fitback.repository.FileDBRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,13 +14,12 @@ public class FeedbackService {
     private FeedbackRepository feedbackRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private FileDBRepository fileDBRepository;
 
-    public Feedback createFeedback(Feedback feedback, Long id) {
-        User user = userRepository.findById(id).get();
+    public Long createFeedback(Feedback feedback) {
+        Feedback newFeedback = feedbackRepository.save(feedback);
 
-        feedback.setUser(user);
-
-        return feedbackRepository.save(feedback);
+        return newFeedback.getId();
     }
+
 }

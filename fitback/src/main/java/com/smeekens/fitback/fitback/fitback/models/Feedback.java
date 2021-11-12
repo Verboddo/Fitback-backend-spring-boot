@@ -13,20 +13,19 @@ public class Feedback {
 
     private String feedback;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
-    @JsonIgnore
-    User user;
+    @ManyToOne
+    @JoinColumn(name="username", nullable = false)
+    private FileDB fileDB;
 
     public Feedback() {
     }
 
-    public User getUser() {
-        return user;
+    public FileDB getFileDB() {
+        return fileDB;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setFileDB(FileDB fileDB) {
+        this.fileDB = fileDB;
     }
 
     public Feedback(String feedback) {

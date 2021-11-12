@@ -13,7 +13,6 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
 
-
 @Service
 public class UserService {
 
@@ -43,19 +42,10 @@ public class UserService {
         }
     }
 
-    public Set<Feedback> getUserFeedback(Long id) {
-        Optional<User> user = userRepository.findById(id);
-        return user.get().getFeedbacks();
-    }
-
     public UserProfile getUserUserProfile(Long id) {
         Optional<User> user = userRepository.findById(id);
         return user.get().getUserProfile();
     }
 
-    public FileDB getUserFiles(Long id) {
-        Optional<User> user = userRepository.findById(id);
-        return (FileDB) user.get().getFileDB();
-    }
 
 }

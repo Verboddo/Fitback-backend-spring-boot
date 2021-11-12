@@ -48,7 +48,6 @@ public class User {
     @OneToMany(
             mappedBy = "user",
             cascade = CascadeType.ALL)
-    @Fetch(FetchMode.SELECT)
     @JsonIgnore
     private List<FileDB> fileDB;
 
@@ -58,21 +57,13 @@ public class User {
     @JsonIgnore
     private UserProfile userProfile;
 
-    @OneToMany(fetch = FetchType.EAGER,
-            mappedBy = "user",
-            cascade = CascadeType.ALL)
-    @JsonIgnore
-    private Set<Feedback> feedbacks = new HashSet<>();
-
     public User() {
     }
 
-    public Set<Feedback> getFeedbacks() {
-        return feedbacks;
-    }
-
-    public void setFeedbacks(Set<Feedback> feedbacks) {
-        this.feedbacks = feedbacks;
+    public User(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
     }
 
     public UserProfile getUserProfile() {
@@ -94,12 +85,6 @@ public class User {
     public void addFileDB(FileDB fileDB) {
         this.fileDB.add(fileDB);
         fileDB.setUser(this);
-    }
-
-    public User(String username, String email, String password) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
     }
 
     public Long getId() {

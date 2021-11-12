@@ -51,10 +51,6 @@ public class FilesController {
         return ResponseEntity.created(location).build();
     }
 
-    /*public ResponseEntity<Object> getTest() {
-
-    }*/
-
     // get all files, only for admin
     @GetMapping("/files")
     @PreAuthorize("hasRole('ADMIN')")
