@@ -8,25 +8,21 @@ import com.smeekens.fitback.fitback.fitback.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class UserProfileService {
 
+    @Autowired
     private UserProfileRepository userProfileRepository;
-    private UserRepository userRepository;
 
     @Autowired
-    public UserProfileService(UserProfileRepository userProfileRepository, UserRepository userRepository) {
-        this.userProfileRepository = userProfileRepository;
-        this.userRepository = userRepository;
-    }
+    private UserRepository userRepository;
+
 
     public UserProfile saveUserProfile(UserProfile userProfile, Long id) {
         User user = userRepository.findById(id).get();
 
         userProfile.setUser(user);
-        userRepository.save(user);
+
         return userProfileRepository.save(userProfile);
     }
 

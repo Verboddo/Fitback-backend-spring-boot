@@ -1,6 +1,9 @@
 package com.smeekens.fitback.fitback.fitback.controllers;
 
 import com.smeekens.fitback.fitback.fitback.exceptions.NotAuthorizedException;
+import com.smeekens.fitback.fitback.fitback.models.Feedback;
+import com.smeekens.fitback.fitback.fitback.models.FileDB;
+import com.smeekens.fitback.fitback.fitback.models.UserProfile;
 import com.smeekens.fitback.fitback.fitback.security.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -49,4 +52,22 @@ public class UserController {
         userService.deleteUserById(id);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/{id}/feedback")
+    public ResponseEntity<Object> getUserFeedback(@PathVariable("id") Long id) {
+        Iterable<Feedback> feedbacks = userService.getUserFeedback(id);
+        return ResponseEntity.ok(feedbacks);
+    }
+
+    @GetMapping("/{id}/userprofile")
+    public ResponseEntity<Object> getUserUserProfile(@PathVariable("id") Long id) {
+        UserProfile userProfiles = userService.getUserUserProfile(id);
+        return ResponseEntity.ok(userProfiles);
+    }
+
+    public ResponseEntity<Object> getUserFiles(@PathVariable("id") Long id) {
+        FileDB fileDB = userService.getUserFiles(id);
+        return ResponseEntity.ok(fileDB);
+    }
+
 }

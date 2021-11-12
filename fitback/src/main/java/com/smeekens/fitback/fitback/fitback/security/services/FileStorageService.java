@@ -11,7 +11,9 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 
@@ -33,7 +35,6 @@ public class FileStorageService {
 
             FileDB fileDB = new FileDB(fileName, multipartFile.getContentType(), multipartFile.getBytes());
             fileDB.setUser(user);
-            //user.addFileDB(fileDB);
             userRepository.save(user);
             return fileDBRepository.save(fileDB);
     }

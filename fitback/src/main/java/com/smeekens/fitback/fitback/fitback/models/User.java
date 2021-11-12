@@ -1,9 +1,15 @@
 package com.smeekens.fitback.fitback.fitback.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -40,18 +46,33 @@ public class User {
     private Set<Role> roles = new HashSet<>();
 
     @OneToMany(
-            fetch = FetchType.EAGER,
             mappedBy = "user",
             cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SELECT)
+    @JsonIgnore
     private List<FileDB> fileDB;
-
 
     @OneToOne(fetch = FetchType.LAZY,
             mappedBy = "user",
             cascade = CascadeType.ALL)
+    @JsonIgnore
     private UserProfile userProfile;
 
+    @OneToMany(fetch = FetchType.EAGER,
+            mappedBy = "user",
+            cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<Feedback> feedbacks = new HashSet<>();
+
     public User() {
+    }
+
+    public Set<Feedback> getFeedbacks() {
+        return feedbacks;
+    }
+
+    public void setFeedbacks(Set<Feedback> feedbacks) {
+        this.feedbacks = feedbacks;
     }
 
     public UserProfile getUserProfile() {

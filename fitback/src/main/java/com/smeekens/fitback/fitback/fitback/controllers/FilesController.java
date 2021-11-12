@@ -4,6 +4,7 @@ package com.smeekens.fitback.fitback.fitback.controllers;
 import com.smeekens.fitback.fitback.fitback.message.ResponseFile;
 import com.smeekens.fitback.fitback.fitback.models.FileDB;
 import com.smeekens.fitback.fitback.fitback.models.User;
+import com.smeekens.fitback.fitback.fitback.repository.FileDBRepository;
 import com.smeekens.fitback.fitback.fitback.repository.UserRepository;
 import com.smeekens.fitback.fitback.fitback.security.services.FileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.io.IOException;
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -29,6 +31,9 @@ public class FilesController {
     private final FileStorageService fileStorageService;
 
     private final UserRepository userRepository;
+
+    @Autowired
+    private FileDBRepository fileDBRepository;
 
     @Autowired
     public FilesController(FileStorageService fileStorageService, UserRepository userRepository) {
@@ -46,6 +51,10 @@ public class FilesController {
         return ResponseEntity.created(location).build();
     }
 
+    /*public ResponseEntity<Object> getTest() {
+
+    }*/
+
     // get all files, only for admin
     @GetMapping("/files")
     @PreAuthorize("hasRole('ADMIN')")
@@ -58,6 +67,8 @@ public class FilesController {
                     .toUriString();
 
             return new ResponseFile(
+                    fileDB.getUser(),
+                    fileDB.getId(),
                     fileDB.getName(),
                     fileDownloadUri,
                     fileDB.getType(),
@@ -79,7 +90,7 @@ public class FilesController {
     // Delete file by id, only for admin
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Object> deleteFileById(@PathVariable("id") Long id){
+    public ResponseEntity<Object> deleteFileById(@PathVariable("id") Long id) {
         fileStorageService.deleteFile(id);
         return ResponseEntity.ok().build();
     }
