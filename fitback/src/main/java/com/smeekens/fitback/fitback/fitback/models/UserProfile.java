@@ -21,8 +21,7 @@ public class UserProfile {
     private int height;
     private int weight;
 
-    @OneToOne(fetch = FetchType.LAZY,optional = false
-            )
+    @OneToOne(fetch = FetchType.LAZY,optional = false)
     @JoinColumn(name = "user_id",
             nullable = false)
     @JsonIgnore

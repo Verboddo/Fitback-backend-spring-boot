@@ -1,8 +1,6 @@
 package com.smeekens.fitback.fitback.fitback.security.services;
 
 import com.smeekens.fitback.fitback.fitback.exceptions.UserNotFoundException;
-import com.smeekens.fitback.fitback.fitback.models.Feedback;
-import com.smeekens.fitback.fitback.fitback.models.FileDB;
 import com.smeekens.fitback.fitback.fitback.models.User;
 import com.smeekens.fitback.fitback.fitback.models.UserProfile;
 import com.smeekens.fitback.fitback.fitback.repository.UserRepository;
@@ -11,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class UserService {
@@ -46,6 +43,4 @@ public class UserService {
         Optional<User> user = userRepository.findById(id);
         return user.get().getUserProfile();
     }
-
-
 }

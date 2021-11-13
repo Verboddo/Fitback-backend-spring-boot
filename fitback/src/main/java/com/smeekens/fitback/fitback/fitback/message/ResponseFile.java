@@ -1,9 +1,13 @@
 package com.smeekens.fitback.fitback.fitback.message;
 
+import com.smeekens.fitback.fitback.fitback.models.Feedback;
 import com.smeekens.fitback.fitback.fitback.models.User;
+
+import java.util.List;
 
 public class ResponseFile {
     private User user;
+    private List<Feedback> feedback;
     private Long id;
     private String name;
     private String url;
@@ -18,13 +22,23 @@ public class ResponseFile {
         this.size = size;
     }
 
-    public ResponseFile(User user, Long id, String name, String url, String type, long size) {
+
+    public ResponseFile(List<Feedback> feedback, User user, Long id, String name, String url, String type, long size) {
+        this.feedback =  feedback;
         this.user = user;
         this.id = id;
         this.name = name;
         this.url = url;
         this.type = type;
         this.size = size;
+    }
+
+    public List<Feedback> getFeedback() {
+        return feedback;
+    }
+
+    public void setFeedback(List<Feedback> feedback) {
+        this.feedback = feedback;
     }
 
     public Long getUser() {

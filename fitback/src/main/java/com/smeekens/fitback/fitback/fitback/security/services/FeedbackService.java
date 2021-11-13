@@ -1,11 +1,13 @@
 package com.smeekens.fitback.fitback.fitback.security.services;
 
+import com.smeekens.fitback.fitback.fitback.exceptions.RecordNotFoundException;
 import com.smeekens.fitback.fitback.fitback.models.Feedback;
-import com.smeekens.fitback.fitback.fitback.models.FileDB;
 import com.smeekens.fitback.fitback.fitback.repository.FeedbackRepository;
 import com.smeekens.fitback.fitback.fitback.repository.FileDBRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Collection;
 
 @Service
 public class FeedbackService {
@@ -14,12 +16,27 @@ public class FeedbackService {
     private FeedbackRepository feedbackRepository;
 
     @Autowired
-    private FileDBRepository fileDBRepository;
+    FileDBRepository fileDBRepository;
 
-    public Long createFeedback(Feedback feedback) {
+    public Long saveFeedback(Feedback feedback) {
         Feedback newFeedback = feedbackRepository.save(feedback);
-
         return newFeedback.getId();
+    }
+
+    public Collection<Feedback> getAllFeedback() {
+        return feedbackRepository.findAll();
+    }
+
+    public void updateFeedback(Long id, Feedback newFeedback) {
+        if (!feedbackRepository.existsById(id)) throw new RecordNotFoundException();
+        Feedback feedback = feedbackRepository.findById(id).get();
+        feedback.setFeedback(newFeedback.getFeedback());
+        feedbackRepository.save(feedback);
+    }
+
+    public void deleteFeedback(Long id) {
+        if (!feedbackRepository.existsById(id)) throw new RecordNotFoundException();
+        feedbackRepository.deleteById(id);
     }
 
 }

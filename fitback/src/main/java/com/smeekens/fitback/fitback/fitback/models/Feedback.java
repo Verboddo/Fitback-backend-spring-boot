@@ -1,7 +1,5 @@
 package com.smeekens.fitback.fitback.fitback.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 
 @Entity
@@ -14,7 +12,7 @@ public class Feedback {
     private String feedback;
 
     @ManyToOne
-    @JoinColumn(name="username", nullable = false)
+    @JoinColumn(name="fileDB_id")
     private FileDB fileDB;
 
     public Feedback() {

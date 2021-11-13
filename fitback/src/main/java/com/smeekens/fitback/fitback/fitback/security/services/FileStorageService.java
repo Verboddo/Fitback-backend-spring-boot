@@ -1,6 +1,7 @@
 package com.smeekens.fitback.fitback.fitback.security.services;
 
 import com.smeekens.fitback.fitback.fitback.exceptions.RecordNotFoundException;
+import com.smeekens.fitback.fitback.fitback.models.Feedback;
 import com.smeekens.fitback.fitback.fitback.models.FileDB;
 import com.smeekens.fitback.fitback.fitback.models.User;
 import com.smeekens.fitback.fitback.fitback.repository.FileDBRepository;
@@ -58,5 +59,11 @@ public class FileStorageService {
             throw new RecordNotFoundException(id);
         }
     }
+
+    public List<Feedback> getFilesFeedback(Long id) {
+        Optional<FileDB> fileDB = fileDBRepository.findById(id);
+        return fileDB.get().getFeedback();
+    }
+
 
 }
