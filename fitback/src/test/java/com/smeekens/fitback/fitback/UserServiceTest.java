@@ -33,7 +33,7 @@ public class UserServiceTest {
     User user;
 
     @Test
-    public void getUserByUsername() {
+    public void getUserByUsernameTest() {
         // Arrange
         User user = new User();
         user.setUsername("ramon");
@@ -49,16 +49,17 @@ public class UserServiceTest {
         User found = userService.getUser(username);
 
         //Assert
+        verify(userRepository).findByUsername(expected);
         assertEquals(expected, found.getUsername());
     }
 
     @Test
-    public void getUserException() {
+    public void getUserExceptionTest() {
         assertThrows(UserNotFoundException.class, () -> userService.getUser(null));
     }
 
     @Test
-    public void deleteUser() {
+    public void deleteUserTest() {
         user = new User();
         user.setId(1L);
 
@@ -73,7 +74,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void getUserUserProfile() {
+    public void getUserUserProfileTest() {
         user = new User();
         user.setId(1L);
 
@@ -96,10 +97,18 @@ public class UserServiceTest {
         userService.getUserUserProfile(1L);
 
         assertThat(user.getUserProfile()).isEqualTo(userProfile);
+        assertThat(user.getUserProfile().getFirstName()).isEqualTo("test");
+        assertThat(user.getUserProfile().getLastName()).isEqualTo("test");
+        assertThat(user.getUserProfile().getCountry()).isEqualTo("test country");
+        assertThat(user.getUserProfile().getAddress()).isEqualTo("test address");
+        assertThat(user.getUserProfile().getZipcode()).isEqualTo("4444TE");
+        assertThat(user.getUserProfile().getAge()).isEqualTo(28);
+        assertThat(user.getUserProfile().getWeight()).isEqualTo(80);
+        assertThat(user.getUserProfile().getHeight()).isEqualTo(180);
     }
 
     @Test
-    public void getUserUserProfileException() {
+    public void getUserUserProfileExceptionTest() {
         assertThrows(UserNotFoundException.class, () -> userService.getUserUserProfile(null));
     }
 

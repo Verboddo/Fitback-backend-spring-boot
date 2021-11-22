@@ -36,7 +36,7 @@ public class FeedbackServiceTest {
     Feedback feedback;
 
     @Test
-    public void getAllFeedback() {
+    public void getAllFeedbackTest() {
         List<Feedback> testFeedbackList = new ArrayList<>();
         Feedback feedback1 = new Feedback();
         feedback1.setId(1L);
@@ -64,7 +64,7 @@ public class FeedbackServiceTest {
     }
 
     @Test
-    public void saveFeedback() {
+    public void saveFeedbackTest() {
         feedback = new Feedback("Test Feedback");
         feedback.setId(24L);
 
@@ -77,7 +77,7 @@ public class FeedbackServiceTest {
     }
 
     @Test
-    public void deleteFeedback() {
+    public void deleteFeedbackTest() {
         feedback = new Feedback();
         feedback.setId(1L);
 
@@ -92,7 +92,7 @@ public class FeedbackServiceTest {
     }
 
     @Test
-    public void updateFeedback() {
+    public void updateFeedbackTest() {
         feedback = new Feedback();
         feedback.setId(1L);
         feedback.setFeedback("this is test feedback");
@@ -108,7 +108,7 @@ public class FeedbackServiceTest {
     }
 
     @Test
-    public void getUpdateFeedbackException() {
+    public void getUpdateFeedbackExceptionTest() {
         assertThrows(RecordNotFoundException.class, () -> feedbackService.updateFeedback(null, null));
     }
 
