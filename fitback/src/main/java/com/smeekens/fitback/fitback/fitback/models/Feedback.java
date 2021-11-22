@@ -9,6 +9,7 @@ public class Feedback {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(length = 1024)
     private String feedback;
 
     @ManyToOne

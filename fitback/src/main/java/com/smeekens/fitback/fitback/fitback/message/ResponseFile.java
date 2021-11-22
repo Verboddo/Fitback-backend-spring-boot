@@ -6,26 +6,17 @@ import com.smeekens.fitback.fitback.fitback.models.User;
 import java.util.List;
 
 public class ResponseFile {
-    private User user;
     private List<Feedback> feedback;
+    private String username;
     private Long id;
     private String name;
     private String url;
     private String type;
     private long size;
 
-    public ResponseFile(Long id, String name, String url, String type, long size) {
-        this.id = id;
-        this.name = name;
-        this.url = url;
-        this.type = type;
-        this.size = size;
-    }
-
-
-    public ResponseFile(List<Feedback> feedback, User user, Long id, String name, String url, String type, long size) {
+    public ResponseFile(List<Feedback> feedback, String username, Long id, String name, String url, String type, long size) {
         this.feedback =  feedback;
-        this.user = user;
+        this.username = username;
         this.id = id;
         this.name = name;
         this.url = url;
@@ -41,12 +32,16 @@ public class ResponseFile {
         this.feedback = feedback;
     }
 
-    public Long getUser() {
-        return user.getId();
+    public String getUsername() {
+        return username;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setSize(long size) {
+        this.size = size;
     }
 
     public Long getId() {

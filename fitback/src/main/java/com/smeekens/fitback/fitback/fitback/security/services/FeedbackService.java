@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Service
 public class FeedbackService {
@@ -28,15 +29,19 @@ public class FeedbackService {
     }
 
     public void updateFeedback(Long id, Feedback newFeedback) {
-        if (!feedbackRepository.existsById(id)) throw new RecordNotFoundException();
-        Feedback feedback = feedbackRepository.findById(id).get();
-        feedback.setFeedback(newFeedback.getFeedback());
-        feedbackRepository.save(feedback);
+        Optional<Feedback> feedbackOptional = feedbackRepository.findById(id);
+        if (feedbackOptional.isPresent()) {
+            Feedback feedback = feedbackRepository.findById(id).get();
+            feedback.setFeedback(newFeedback.getFeedback());
+            feedbackRepository.save(feedback);
+        } else {
+            throw new RecordNotFoundException();
+        }
     }
 
     public void deleteFeedback(Long id) {
-        if (!feedbackRepository.existsById(id)) throw new RecordNotFoundException();
         feedbackRepository.deleteById(id);
+
     }
 
 }

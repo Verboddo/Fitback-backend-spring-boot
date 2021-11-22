@@ -48,7 +48,6 @@ public class FilesController {
 
     // get all files, only for admin
     @GetMapping("/files")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<ResponseFile>> getAllFiles() {
         List<ResponseFile> files = fileStorageService.getAllFiles().map(fileDB -> {
             String fileDownloadUri = ServletUriComponentsBuilder
@@ -59,7 +58,7 @@ public class FilesController {
 
             return new ResponseFile(
                     fileDB.getFeedback(),
-                    fileDB.getUser(),
+                    fileDB.getUser().getUsername(),
                     fileDB.getId(),
                     fileDB.getName(),
                     fileDownloadUri,

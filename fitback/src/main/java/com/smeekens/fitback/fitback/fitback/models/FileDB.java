@@ -21,14 +21,14 @@ public class FileDB {
     @JsonIgnore
     private byte[] data;
 
-    @ManyToOne(fetch = FetchType.LAZY,
+    @ManyToOne(fetch = FetchType.EAGER,
             optional = false)
     @JoinColumn(name = "user_id",
             nullable = false)
     @JsonIgnore
     private User user;
 
-    @OneToMany(mappedBy = "fileDB", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "fileDB", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Feedback> feedback;
 
@@ -44,6 +44,7 @@ public class FileDB {
     public FileDB(User user) {
         this.user = user;
     }
+
 
     public List<Feedback> getFeedback() {
         return feedback;

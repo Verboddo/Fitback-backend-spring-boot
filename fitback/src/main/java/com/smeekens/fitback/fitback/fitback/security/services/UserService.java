@@ -21,26 +21,27 @@ public class UserService {
     }
 
     public User getUser(String username) {
-    Optional<User> optionalUser = userRepository.findByUsername(username);
-       if(optionalUser.isPresent()) {
-           User user = optionalUser.get();
+        Optional<User> optionalUser = userRepository.findByUsername(username);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
 
-           return user;
+            return user;
         } else {
             throw new UserNotFoundException(username);
         }
     }
 
     public void deleteUserById(Long id) {
-        if(userRepository.existsById(id)) {
-            userRepository.deleteById(id);
+        userRepository.deleteById(id);
+    }
+
+    public UserProfile getUserUserProfile(Long id) {
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent()) {
+            return user.get().getUserProfile();
         } else {
             throw new UserNotFoundException();
         }
     }
 
-    public UserProfile getUserUserProfile(Long id) {
-        Optional<User> user = userRepository.findById(id);
-        return user.get().getUserProfile();
-    }
 }

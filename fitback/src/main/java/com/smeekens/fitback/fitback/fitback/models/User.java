@@ -1,15 +1,10 @@
 package com.smeekens.fitback.fitback.fitback.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -54,7 +49,6 @@ public class User {
     @OneToOne(fetch = FetchType.LAZY,
             mappedBy = "user",
             cascade = CascadeType.ALL)
-    @JsonIgnore
     private UserProfile userProfile;
 
     public User() {
