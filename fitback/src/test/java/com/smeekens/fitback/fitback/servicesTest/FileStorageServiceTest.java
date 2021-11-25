@@ -1,6 +1,8 @@
-package com.smeekens.fitback.fitback;
+package com.smeekens.fitback.fitback.servicesTest;
 
+import com.smeekens.fitback.fitback.FitbackApplication;
 import com.smeekens.fitback.fitback.fitback.exceptions.RecordNotFoundException;
+import com.smeekens.fitback.fitback.fitback.exceptions.UserNotFoundException;
 import com.smeekens.fitback.fitback.fitback.models.Feedback;
 import com.smeekens.fitback.fitback.fitback.models.FileDB;
 import com.smeekens.fitback.fitback.fitback.models.User;
@@ -39,9 +41,6 @@ public class FileStorageServiceTest {
 
     @Mock
     private FileDBRepository fileDBRepository;
-
-    @Mock
-    private UserRepository userRepository;
 
     @InjectMocks
     private FileStorageService fileStorageService;
@@ -108,5 +107,10 @@ public class FileStorageServiceTest {
                 .thenReturn(Optional.of(fileDB));
 
         assertThat(fileDB.getFeedback()).isEqualTo(feedbackList);
+    }
+
+    @Test
+    public void getFilesFeedbackException() {
+        assertThrows(RecordNotFoundException.class, () -> fileStorageService.getFilesFeedback(null));
     }
 }

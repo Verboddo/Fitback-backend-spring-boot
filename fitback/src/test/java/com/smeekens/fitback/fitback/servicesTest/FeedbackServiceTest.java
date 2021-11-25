@@ -1,5 +1,6 @@
-package com.smeekens.fitback.fitback;
+package com.smeekens.fitback.fitback.servicesTest;
 
+import com.smeekens.fitback.fitback.FitbackApplication;
 import com.smeekens.fitback.fitback.fitback.exceptions.RecordNotFoundException;
 import com.smeekens.fitback.fitback.fitback.exceptions.UserNotFoundException;
 import com.smeekens.fitback.fitback.fitback.models.Feedback;
@@ -61,6 +62,9 @@ public class FeedbackServiceTest {
         verify(feedbackRepository, times(1)).findAll();
 
         assertThat(testFeedbackList.size()).isEqualTo(3);
+        assertThat(testFeedbackList.get(0)).isEqualTo(feedback1);
+        assertThat(testFeedbackList.get(1)).isEqualTo(feedback2);
+        assertThat(testFeedbackList.get(2)).isEqualTo(feedback3);
     }
 
     @Test
@@ -105,6 +109,7 @@ public class FeedbackServiceTest {
         feedbackService.updateFeedback(1L, feedback);
 
         verify(feedbackRepository).save(feedback);
+        assertEquals("this is new test feedback", feedback.getFeedback());
     }
 
     @Test

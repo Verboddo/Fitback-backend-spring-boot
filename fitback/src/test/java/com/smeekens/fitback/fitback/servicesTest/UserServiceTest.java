@@ -1,5 +1,6 @@
-package com.smeekens.fitback.fitback;
+package com.smeekens.fitback.fitback.servicesTest;
 
+import com.smeekens.fitback.fitback.FitbackApplication;
 import com.smeekens.fitback.fitback.fitback.exceptions.UserNotFoundException;
 import com.smeekens.fitback.fitback.fitback.models.User;
 import com.smeekens.fitback.fitback.fitback.models.UserProfile;
@@ -12,6 +13,8 @@ import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -31,6 +34,37 @@ public class UserServiceTest {
 
     @Mock
     User user;
+
+    @Test
+    public void getAllUsersTest() {
+        List<User> testUserList = new ArrayList<>();
+        User user1 = new User();
+        User user2 = new User();
+        User user3 = new User();
+        user1.setId(1L);
+        user2.setId(2L);
+        user3.setId(3L);
+        user1.setUsername("test1");
+        user2.setUsername("test1");
+        user3.setUsername("test1");
+
+        testUserList.add(user1);
+        testUserList.add(user2);
+        testUserList.add(user3);
+
+        Mockito
+                .when(userRepository.findAll())
+                .thenReturn(testUserList);
+
+        userService.getAllUsers();
+
+        verify(userRepository, times(1)).findAll();
+
+        assertThat(testUserList.size()).isEqualTo(3);
+        assertThat(testUserList.get(0)).isEqualTo(user1);
+        assertThat(testUserList.get(1)).isEqualTo(user2);
+        assertThat(testUserList.get(2)).isEqualTo(user3);
+    }
 
     @Test
     public void getUserByUsernameTest() {

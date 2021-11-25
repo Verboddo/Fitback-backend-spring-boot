@@ -1,5 +1,7 @@
-package com.smeekens.fitback.fitback;
+package com.smeekens.fitback.fitback.servicesTest;
 
+import com.smeekens.fitback.fitback.FitbackApplication;
+import com.smeekens.fitback.fitback.fitback.exceptions.RecordNotFoundException;
 import com.smeekens.fitback.fitback.fitback.exceptions.UserNotFoundException;
 import com.smeekens.fitback.fitback.fitback.models.User;
 import com.smeekens.fitback.fitback.fitback.models.UserProfile;
@@ -103,6 +105,11 @@ public class UserProfileServiceTest {
         assertThat(userProfile.getAge()).isEqualTo(18);
         assertThat(userProfile.getWeight()).isEqualTo(70);
         assertThat(userProfile.getHeight()).isEqualTo(150);
+    }
+
+    @Test
+    public void UpdateUserProfileException() {
+        assertThrows(RecordNotFoundException.class, () -> userProfileService.updateUserProfile(null, null));
     }
 
 }
