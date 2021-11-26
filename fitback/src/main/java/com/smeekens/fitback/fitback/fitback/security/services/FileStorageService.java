@@ -50,7 +50,11 @@ public class FileStorageService {
     }
 
     public void deleteFile(Long id) {
+        if (fileDBRepository.existsById(id)) {
             fileDBRepository.deleteById(id);
+        } else {
+            throw new RecordNotFoundException();
+        }
     }
 
     public List<Feedback> getFilesFeedback(Long id) {

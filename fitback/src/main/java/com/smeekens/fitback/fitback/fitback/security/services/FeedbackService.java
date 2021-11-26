@@ -40,7 +40,11 @@ public class FeedbackService {
     }
 
     public void deleteFeedback(Long id) {
-        feedbackRepository.deleteById(id);
+        if (feedbackRepository.existsById(id)) {
+            feedbackRepository.deleteById(id);
+        } else {
+            throw new RecordNotFoundException();
+        }
 
     }
 

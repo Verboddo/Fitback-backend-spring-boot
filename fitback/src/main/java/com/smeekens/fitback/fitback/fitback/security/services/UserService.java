@@ -32,7 +32,11 @@ public class UserService {
     }
 
     public void deleteUserById(Long id) {
-        userRepository.deleteById(id);
+        if (userRepository.existsById(id)) {
+            userRepository.deleteById(id);
+        } else {
+            throw new UserNotFoundException();
+        }
     }
 
     public UserProfile getUserUserProfile(Long id) {

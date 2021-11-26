@@ -2,7 +2,6 @@ package com.smeekens.fitback.fitback.servicesTest;
 
 import com.smeekens.fitback.fitback.FitbackApplication;
 import com.smeekens.fitback.fitback.fitback.exceptions.RecordNotFoundException;
-import com.smeekens.fitback.fitback.fitback.exceptions.UserNotFoundException;
 import com.smeekens.fitback.fitback.fitback.models.Feedback;
 import com.smeekens.fitback.fitback.fitback.repository.FeedbackRepository;
 import com.smeekens.fitback.fitback.fitback.security.services.FeedbackService;
@@ -86,9 +85,8 @@ public class FeedbackServiceTest {
         feedback.setId(1L);
 
         Mockito
-                .doThrow(new RecordNotFoundException())
-                .when(feedbackRepository)
-                .delete(feedback);
+                .when(feedbackRepository.existsById(1L))
+                .thenReturn(true);
 
         feedbackService.deleteFeedback(1L);
 

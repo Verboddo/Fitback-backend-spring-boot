@@ -98,9 +98,8 @@ public class UserServiceTest {
         user.setId(1L);
 
         Mockito
-                .doThrow(new UserNotFoundException())
-                .when(userRepository)
-                .delete(user);
+                .when(userRepository.existsById(1L))
+                .thenReturn(true);
 
         userService.deleteUserById(1L);
 

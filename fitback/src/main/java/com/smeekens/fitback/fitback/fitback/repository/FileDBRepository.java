@@ -8,6 +8,4 @@ import java.util.List;
 
 @Repository
 public interface FileDBRepository extends JpaRepository<FileDB, Long> {
-
-    List<FileDB> findAllByUserId(Long id);
 }

@@ -1,8 +1,6 @@
 package com.smeekens.fitback.fitback.fitback.controllers;
 
 import com.smeekens.fitback.fitback.fitback.exceptions.NotAuthorizedException;
-import com.smeekens.fitback.fitback.fitback.models.Feedback;
-import com.smeekens.fitback.fitback.fitback.models.FileDB;
 import com.smeekens.fitback.fitback.fitback.models.UserProfile;
 import com.smeekens.fitback.fitback.fitback.security.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +11,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.List;
 import java.util.Objects;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
