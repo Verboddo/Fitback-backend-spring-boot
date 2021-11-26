@@ -3,7 +3,7 @@ package com.smeekens.fitback.fitback.fitback.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-
+import java.util.List;
 
 @Entity
 @Table(name = "files")
@@ -17,18 +17,23 @@ public class FileDB {
 
     private String type;
 
-    @Lob
+    //@Lob
+    @JsonIgnore
     private byte[] data;
 
-    public FileDB() {
-    }
-
-    @ManyToOne(fetch = FetchType.LAZY,
+    @ManyToOne(fetch = FetchType.EAGER,
             optional = false)
     @JoinColumn(name = "user_id",
             nullable = false)
     @JsonIgnore
     private User user;
+
+    @OneToMany(mappedBy = "fileDB", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Feedback> feedback;
+
+    public FileDB() {
+    }
 
     public FileDB(String name, String type, byte[] data) {
         this.name = name;
@@ -38,6 +43,15 @@ public class FileDB {
 
     public FileDB(User user) {
         this.user = user;
+    }
+
+
+    public List<Feedback> getFeedback() {
+        return feedback;
+    }
+
+    public void setFeedback(List<Feedback> feedback) {
+        this.feedback = feedback;
     }
 
     public User getUser() {

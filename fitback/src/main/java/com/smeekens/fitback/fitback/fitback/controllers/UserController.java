@@ -1,7 +1,7 @@
 package com.smeekens.fitback.fitback.fitback.controllers;
 
 import com.smeekens.fitback.fitback.fitback.exceptions.NotAuthorizedException;
-import com.smeekens.fitback.fitback.fitback.models.User;
+import com.smeekens.fitback.fitback.fitback.models.UserProfile;
 import com.smeekens.fitback.fitback.fitback.security.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -43,23 +43,6 @@ public class UserController {
         }
     }
 
-    // Update user information, only for logged-in user or admin
-    /*@PostMapping(value = "/update-information/{username}")
-    public ResponseEntity<Object> updateUserInformation(@PathVariable("username") String username, @RequestBody User user, Principal principal) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-        if (Objects.equals(username, principal.getName())) {
-            userService.updateUser(username, user);
-            return ResponseEntity.ok().build();
-        }
-        if (auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
-            userService.updateUser(username, user);
-            return ResponseEntity.ok().build();
-        } else {
-            throw new NotAuthorizedException();
-        }
-    }*/
-
     // Delete user by id, only admin can do this
     @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasRole('ADMIN')")
@@ -67,4 +50,11 @@ public class UserController {
         userService.deleteUserById(id);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/{id}/userprofile")
+    public ResponseEntity<Object> getUserUserProfile(@PathVariable("id") Long id) {
+        UserProfile userProfiles = userService.getUserUserProfile(id);
+        return ResponseEntity.ok(userProfiles);
+    }
+
 }

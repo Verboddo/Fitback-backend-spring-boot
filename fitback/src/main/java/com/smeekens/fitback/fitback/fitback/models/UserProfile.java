@@ -7,6 +7,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "user_profile")
 public class UserProfile {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,8 +21,7 @@ public class UserProfile {
     private int height;
     private int weight;
 
-    @OneToOne(fetch = FetchType.LAZY,
-            optional = false)
+    @OneToOne(fetch = FetchType.LAZY,optional = false)
     @JoinColumn(name = "user_id",
             nullable = false)
     @JsonIgnore

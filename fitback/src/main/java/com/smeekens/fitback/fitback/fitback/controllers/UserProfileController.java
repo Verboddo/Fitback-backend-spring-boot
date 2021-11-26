@@ -18,14 +18,11 @@ import java.net.URI;
 @RequestMapping(value = "/api/user-profile")
 public class UserProfileController {
 
+    @Autowired
     private UserProfileService userProfileService;
-    private UserRepository userRepository;
 
     @Autowired
-    public UserProfileController(UserProfileService userProfileService, UserRepository userRepository) {
-        this.userProfileService = userProfileService;
-        this.userRepository = userRepository;
-    }
+    private UserRepository userRepository;
 
     @PostMapping("")
     public ResponseEntity<Object> saveUserProfile(@RequestBody UserProfile userProfile, Authentication authentication) {
@@ -34,5 +31,11 @@ public class UserProfileController {
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(userProfile1).toUri();
         return ResponseEntity.created(location).build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateUserProfile(@PathVariable("id")Long id, @RequestBody UserProfile userProfile) {
+        userProfileService.updateUserProfile(id, userProfile);
+        return ResponseEntity.ok().build();
     }
 }

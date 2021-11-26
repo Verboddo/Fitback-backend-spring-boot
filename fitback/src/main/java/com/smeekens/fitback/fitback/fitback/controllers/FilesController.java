@@ -1,7 +1,7 @@
 package com.smeekens.fitback.fitback.fitback.controllers;
 
-
 import com.smeekens.fitback.fitback.fitback.message.ResponseFile;
+import com.smeekens.fitback.fitback.fitback.models.Feedback;
 import com.smeekens.fitback.fitback.fitback.models.FileDB;
 import com.smeekens.fitback.fitback.fitback.models.User;
 import com.smeekens.fitback.fitback.fitback.repository.UserRepository;
@@ -48,16 +48,18 @@ public class FilesController {
 
     // get all files, only for admin
     @GetMapping("/files")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<ResponseFile>> getAllFiles() {
         List<ResponseFile> files = fileStorageService.getAllFiles().map(fileDB -> {
             String fileDownloadUri = ServletUriComponentsBuilder
                     .fromCurrentContextPath()
-                    .path("/files")
+                    .path("/api/file/")
                     .path(String.valueOf(fileDB.getId()))
                     .toUriString();
 
             return new ResponseFile(
+                    fileDB.getFeedback(),
+                    fileDB.getUser().getUsername(),
+                    fileDB.getId(),
                     fileDB.getName(),
                     fileDownloadUri,
                     fileDB.getType(),
@@ -67,7 +69,7 @@ public class FilesController {
     }
 
     // Get file by id, only for admin
-    @GetMapping("/files/{id}")
+    @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<byte[]> getFileById(@PathVariable("id") Long id) {
         FileDB fileDB = fileStorageService.getFileById(id);
@@ -79,9 +81,15 @@ public class FilesController {
     // Delete file by id, only for admin
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Object> deleteFileById(@PathVariable("id") Long id){
+    public ResponseEntity<Object> deleteFileById(@PathVariable("id") Long id) {
         fileStorageService.deleteFile(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/{id}/feedback")
+    public ResponseEntity<Object> getFilesFeedback(@PathVariable("id") Long id) {
+        List<Feedback> feedback = fileStorageService.getFilesFeedback(id);
+        return ResponseEntity.ok(feedback);
     }
 
 }
