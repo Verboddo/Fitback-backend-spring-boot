@@ -1,9 +1,7 @@
 package com.smeekens.fitback.fitback.controllerTest;
 
 import com.smeekens.fitback.fitback.fitback.controllers.FeedbackController;
-import com.smeekens.fitback.fitback.fitback.exceptions.RecordNotFoundException;
 import com.smeekens.fitback.fitback.fitback.models.Feedback;
-import com.smeekens.fitback.fitback.fitback.models.FileDB;
 import com.smeekens.fitback.fitback.fitback.repository.FeedbackRepository;
 import com.smeekens.fitback.fitback.fitback.repository.FileDBRepository;
 import com.smeekens.fitback.fitback.fitback.security.services.FeedbackService;
@@ -17,16 +15,11 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.ArrayList;
-import java.util.Optional;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -45,9 +38,6 @@ public class FeedbackControllerTest {
 
     @MockBean
     private FeedbackRepository feedbackRepository;
-
-    @MockBean
-    private FileDBRepository fileDBRepository;
 
     @Configuration
     @EnableAutoConfiguration(exclude = {SecurityAutoConfiguration.class})
