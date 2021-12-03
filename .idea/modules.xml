@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="ProjectModuleManager">
-    <modules>
-      <module fileurl="file://$PROJECT_DIR$/fitback/fitback.iml" filepath="$PROJECT_DIR$/fitback/fitback.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/fitback-back-end.iml" filepath="$PROJECT_DIR$/.idea/fitback-back-end.iml" />
-    </modules>
-  </component>
-</project>
